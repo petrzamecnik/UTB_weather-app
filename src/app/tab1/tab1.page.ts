@@ -5,6 +5,7 @@ import {OnDestroy} from '@angular/core';
 import {Weather} from '../models/weather.model';
 import {ModalController} from '@ionic/angular';
 import {SettingsPage} from '../pages/settings/settings.page';
+import {PlacesService} from '../services/places/places.service';
 
 @Component({
   selector: 'app-tab1',
@@ -16,12 +17,10 @@ export class Tab1Page {
 
   constructor(
     private apiService: ApiService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private placesService: PlacesService
   ) {
-    this.weather$.push(this.apiService.getWeather(49.231117480192495, 17.65725611161196));
-    this.weather$.push(this.apiService.getWeather(49.20097624827957, 17.49025452997935));
-
-
+    this.initWeather();
   }
 
 
@@ -35,6 +34,27 @@ export class Tab1Page {
     });
 
     await modal.present();
+    console.log('prenset');
+    await modal.onWillDismiss();
+    console.log('onWillDismiss');
+    await modal.onDidDismiss();
+    console.log('onDidDismiss');
+    this.initWeather();
+
   }
+
+  openDetail(weather: Weather) {
+    this.placesService.detail = weather;
+  }
+
+  private initWeather() {
+    this.weather$ = [];
+    this.placesService.places.forEach(place => {
+      if (place.homepage) {
+        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+      }
+    });
+  }
+
 
 }

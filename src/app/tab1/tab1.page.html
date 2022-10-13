@@ -19,13 +19,14 @@
   </ion-header>
 
   <div *ngFor="let item$ of weather$">
-    <ion-card *ngIf="item$ | async; let weather">
+    <ion-card *ngIf="item$ | async; let weather" routerLink="/detail" (click)="openDetail(weather)">
       <ion-card-header>
         <ion-card-subtitle>Počasí pro</ion-card-subtitle>
         <ion-card-title>{{weather.name}}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content class="ion-no-padding ion">
+        <img [src]="'http://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'">
         <ion-list>
           <ion-item>
             <ion-label>Id: {{weather.id}}</ion-label>
