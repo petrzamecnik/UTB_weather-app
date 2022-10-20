@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{weather.name}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img [src]="'http://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'"
+       class="ion-justify-content-center">
+  <ion-list>
+    <ion-item>Humidity: {{weather.main.humidity}}</ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item>Feels like: {{weather.main.feels_like}}</ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item>Temperature: {{weather.main.temp}}</ion-item>
+  </ion-list>
+</ion-content>
